@@ -89,6 +89,15 @@ struct RepositoriesView<viewModelProtocol: RepositoriesViewModelProtocol>: View 
                 }
             }
         }
+        .alert(isPresented: $viewModel.isAlertShowing) {
+            Alert(title: Text("Oups..."),
+                  message: Text(viewModel.loadingError),
+                  primaryButton: .cancel(),
+                  secondaryButton: .default(Text("Reload")) {
+                viewModel.refresh()
+            })
+            //ActionSheet(title: <#T##SwiftUI.Text#>)
+        }
     }
     
 }
