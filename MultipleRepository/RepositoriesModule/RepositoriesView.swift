@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct RepositoriesView<viewModelProtocol: RepositoriesViewModelProtocol>: View {
+struct RepositoriesView<ViewModelProtocol: RepositoriesViewModelProtocol>: View {
     
-    @StateObject private var viewModel: viewModelProtocol
+    @StateObject private var viewModel: ViewModelProtocol
     
     @State var isFiltered = false
+    @State var isReload = false
     
-    public init(viewModel: viewModelProtocol) {
+    public init(viewModel: ViewModelProtocol) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
@@ -23,6 +24,7 @@ struct RepositoriesView<viewModelProtocol: RepositoriesViewModelProtocol>: View 
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                     .scaleEffect(2)
+                    .navigationTitle("Multiple repository")
             } else {
                 
                 if viewModel.isReloadButtonShowing {
@@ -35,19 +37,21 @@ struct RepositoriesView<viewModelProtocol: RepositoriesViewModelProtocol>: View 
                             .scaledToFill()
                             .frame(width: 25, height: 25)
                     }
+                    .navigationTitle("Multiple repository")
                 } else {
                     List {
                         Section {
                             NavigationLink {
                                 FilterView(viewModel:
-                                            FilterViewModel(repositories: viewModel.repositories,
-                                                            allRepositories: viewModel.allRepositories,
-                                                            sortType: viewModel.sortType,
-                                                            filteredStrings: viewModel.filteredStrings, isFiltered: $isFiltered)
-                                           { repos, filteredStrings, sortType in
-                                    viewModel.repositories = repos
+                                            FilterViewModel(
+                                                sortType: viewModel.sortType,
+                                                filteredStrings: viewModel.filteredStrings,
+                                                isFiltered: $isFiltered,
+                                                repositoriesStore: viewModel.repositoriesStore)
+                                           { _, filteredStrings, sortType in
                                     viewModel.filteredStrings = filteredStrings
                                     viewModel.sortType = sortType
+                                    isReload.toggle()
                                 })
                             } label: {
                                 Text("Filter")
@@ -57,13 +61,13 @@ struct RepositoriesView<viewModelProtocol: RepositoriesViewModelProtocol>: View 
                         if isFiltered {
                             Section {
                                 Button {
-                                    withAnimation {
-                                        isFiltered = false
-                                    }
-                                    viewModel.repositories = viewModel.allRepositories
+                                    viewModel.repositoriesStore.sortedRepositories = viewModel.repositoriesStore.repositories
                                     viewModel.sortType = .none
                                     viewModel.filteredStrings.title = ""
                                     viewModel.filteredStrings.nikname = ""
+                                    withAnimation {
+                                        isFiltered = false
+                                    }
                                 } label: {
                                     Text("Remove filter")
                                         .foregroundColor(.red)
@@ -72,11 +76,11 @@ struct RepositoriesView<viewModelProtocol: RepositoriesViewModelProtocol>: View 
                         }
                         
                         Section {
-                            ForEach(viewModel.getRepositoriesCells()) { cell in
+                            ForEach(viewModel.repositoriesStore.sortedRepositories, id: \.self) { repo in
                                 NavigationLink {
-                                    DetailView(viewModel: DetailViewModel(repo: cell.repo))
+                                    DetailView(viewModel: DetailViewModel(repo: repo))
                                 } label: {
-                                    cell
+                                    RepositoryCell(repo: repo)
                                 }
                             }
                         }
@@ -98,13 +102,18 @@ struct RepositoriesView<viewModelProtocol: RepositoriesViewModelProtocol>: View 
             })
             //ActionSheet(title: <#T##SwiftUI.Text#>)
         }
+        .onAppear {
+            Task { await viewModel.getRepo() }
+        }
+        .onChange(of: isReload) { _ in
+        }
     }
     
 }
 
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoriesView(viewModel: RepositoriesViewModel(networkManager: RepositoriesNetworkManager()))
+        RepositoriesView(viewModel: RepositoriesViewModel(networkManager: RepositoriesNetworkManager(session: URLSession(configuration: .default))))
     }
 }
 

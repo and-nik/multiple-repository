@@ -11,7 +11,7 @@ import SwiftUI
 struct MultipleRepositoryApp: App {
     var body: some Scene {
         WindowGroup {
-            RepositoriesView(viewModel: RepositoriesViewModel(networkManager: RepositoriesNetworkManager()))
+            RepositoriesView(viewModel: RepositoriesViewModel(networkManager: RepositoriesNetworkManager(session: URLSession(configuration: .default))))
         }
     }
 }

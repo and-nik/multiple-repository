@@ -9,8 +9,8 @@ import Foundation
 
 enum RequestMethod: String {
     case get = "GET"
-    case post = "POST" //сохранить//создать
-    case put = "PUT" //обновить
-    case patch = "PATCH" //изменить//обновить
-    case delete = "DELETE"
+//    case post = "POST" //сохранить//создать
+//    case put = "PUT" //обновить
+//    case patch = "PATCH" //изменить//обновить
+//    case delete = "DELETE"
 }

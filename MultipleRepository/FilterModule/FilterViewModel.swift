@@ -8,13 +8,16 @@
 import SwiftUI
 
 protocol FilterViewModelProtocol: ObservableObject {
+    
     var sortType: SortType { get set }
     var filteredStrings: (title: String, nikname: String) { get set }
-    var repositories: [Repository] { get set }
-    var allRepositories: [Repository] { get set }
+    var repositoriesStore: RepositoriesStore { get }
+    
     var completion: ([Repository], (title: String, nikname: String), SortType) -> Void { get set }
     func filter()
     var isFiltered: Bool { get set }
+    
+    var count: Int { get }
 }
 
 final class FilterViewModel: FilterViewModelProtocol {
@@ -22,45 +25,86 @@ final class FilterViewModel: FilterViewModelProtocol {
     @Published var sortType: SortType = .none
     @Published var filteredStrings = (title: "", nikname: "")
     
-    @Published var repositories: [Repository]
-    var allRepositories: [Repository]
     @Binding var isFiltered: Bool
+    @Published var count: Int
+    
+    @ObservedObject var repositoriesStore: RepositoriesStore
     
     var completion: ([Repository], (title: String, nikname: String), SortType) -> Void
     
-    init(repositories: [Repository],
-         allRepositories: [Repository],
-         sortType: SortType,
+    init(sortType: SortType,
          filteredStrings: (title: String, nikname: String),
          isFiltered: Binding<Bool>,
+         repositoriesStore: RepositoriesStore,
          completion: @escaping ([Repository], (title: String, nikname: String), SortType) -> Void) {
-        self.repositories = repositories
-        self.allRepositories = allRepositories
         self.sortType = sortType
         self._isFiltered = isFiltered
         self.filteredStrings = filteredStrings
         self.completion = completion
+        self.repositoriesStore = repositoriesStore
+        self.count = repositoriesStore.sortedRepositories.count
     }
     
     func filter() {
-        repositories = allRepositories
+        repositoriesStore.sortedRepositories = repositoriesStore.repositories
         switch sortType {
         case .gitToBit:
-            repositories = repositories.sorted { $0.dataOrigin.rawValue < $1.dataOrigin.rawValue }
+            repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.dataOrigin.rawValue < $1.dataOrigin.rawValue }
         case .bitToGit:
-            repositories = repositories.sorted { $0.dataOrigin.rawValue > $1.dataOrigin.rawValue }
+            repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.dataOrigin.rawValue > $1.dataOrigin.rawValue }
         case .AToZ:
-            repositories = repositories.sorted { $0.title < $1.title }
+            repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.title < $1.title }
         case .ZToA:
-            repositories = repositories.sorted { $0.title > $1.title }
+            repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.title > $1.title }
         case .none: break
         }
-        repositories = repositories
+        repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories
             .filter { filteredStrings.title != "" ? $0.title.lowercased().contains(filteredStrings.title.lowercased()) : true }
             .filter { $0.ownerNikname != nil && filteredStrings.nikname != "" ? $0.ownerNikname!.lowercased().contains(filteredStrings.nikname.lowercased()) : true }
-//        completion(repositories, filteredStrings, sortType)
+        count = repositoriesStore.sortedRepositories.count
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+//    func filter() {
+//        repositories = allRepositories
+//        switch sortType {
+//        case .gitToBit:
+//            repositories = repositories.sorted { $0.dataOrigin.rawValue < $1.dataOrigin.rawValue }
+//            //repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.dataOrigin.rawValue < $1.dataOrigin.rawValue }
+//        case .bitToGit:
+//            repositories = repositories.sorted { $0.dataOrigin.rawValue > $1.dataOrigin.rawValue }
+//            //repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.dataOrigin.rawValue > $1.dataOrigin.rawValue }
+//        case .AToZ:
+//            repositories = repositories.sorted { $0.title < $1.title }
+//            //repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.title < $1.title }
+//        case .ZToA:
+//            repositories = repositories.sorted { $0.title > $1.title }
+//            //repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories.sorted { $0.title > $1.title }
+//        case .none: break
+//        }
+//        repositories = repositories
+//        //repositoriesStore.sortedRepositories = repositoriesStore.sortedRepositories
+//            .filter { filteredStrings.title != "" ? $0.title.lowercased().contains(filteredStrings.title.lowercased()) : true }
+//            .filter { $0.ownerNikname != nil && filteredStrings.nikname != "" ? $0.ownerNikname!.lowercased().contains(filteredStrings.nikname.lowercased()) : true }
+//        print(repositoriesStore.sortedRepositories.count)
+//        print(repositoriesStore.repositories.count)
+//        //completion(repositories, filteredStrings, sortType)
+//    }
+
+
+
+
+
 
 
 //@State private var sortType: SortType = .none

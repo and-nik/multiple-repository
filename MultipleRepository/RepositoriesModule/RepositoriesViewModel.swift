@@ -9,28 +9,27 @@ import SwiftUI
 
 protocol RepositoriesViewModelProtocol: ObservableObject {
     
-    var repositories: [Repository] { get set }
-    var networkManager: NetworkManagerProtocol { get }
+    var networkManager: RepositoriesNetworkManager { get }
     func getRepo() async
-    func getRepositoriesCells() -> [RepositoryCell]
     
     //error handle variable
     var isLoading: Bool { get set }
     var isReloadButtonShowing: Bool { get set }
     var isAlertShowing: Bool { get set }
+    
     var loadingError: String { get set }
     
-    //filter variable
-    var allRepositories: [Repository] { get set }
+    var repositoriesStore: RepositoriesStore { get set }
+    
     var filteredStrings: (title: String, nikname: String) { get set }
     var sortType: SortType { get set }
+    
     func refresh()
 }
 
 final class RepositoriesViewModel: RepositoriesViewModelProtocol, ObservableObject {
     
-    @Published public var repositories = [Repository]()
-    let networkManager: NetworkManagerProtocol
+    let networkManager: RepositoriesNetworkManager
     
     @Published var isLoading: Bool = true
     @Published var isReloadButtonShowing: Bool = false
@@ -39,43 +38,35 @@ final class RepositoriesViewModel: RepositoriesViewModelProtocol, ObservableObje
     
     var filteredStrings = (title: "", nikname: "")
     var sortType: SortType = .none
-    lazy var allRepositories = repositories
     
-    init(networkManager: NetworkManagerProtocol) {
+    var repositoriesStore: RepositoriesStore = RepositoriesStore()
+    
+    init(networkManager: RepositoriesNetworkManager) {
         self.networkManager = networkManager
-        Task {
-            await getRepo()
-        }
     }
     
     public func getRepo() async {
         Task { @MainActor in
             do {
-                guard let network = networkManager as? RepositoriesNetworkManager else { return }
-                let bitbucketRepositories = try await network.getRepo(from: .bitbucket)
-                let githubRepositories = try await network.getRepo(from: .github)
-                repositories = bitbucketRepositories + githubRepositories
-                repositories.shuffle()
+                let bitbucketRepositories = try await networkManager.getRepo(from: .bitbucket)
+                let githubRepositories = try await networkManager.getRepo(from: .github)
+                repositoriesStore.repositories = bitbucketRepositories + githubRepositories
+                repositoriesStore.repositories.shuffle()
+                repositoriesStore.sortedRepositories = repositoriesStore.repositories
                 isLoading = false
                 isReloadButtonShowing = false
             } catch {
                 print(error)
                 isLoading = false
                 isReloadButtonShowing = true
-                loadingError = "Some problem: " + error.localizedDescription
+                loadingError = "Some problem: " + "\(error)"
                 isAlertShowing.toggle()
             }
         }
     }
     
-    public func getRepositoriesCells() -> [RepositoryCell] {
-        repositories.map { RepositoryCell(repo: $0) }
-    }
-    
     public func refresh() {
-        Task {
-            await getRepo()
-        }
+        Task { await getRepo() }
         sortType = .none
         filteredStrings.title = ""
         filteredStrings.nikname = ""

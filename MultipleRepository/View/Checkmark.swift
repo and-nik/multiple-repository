@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct Checkmark<Label: View>: View {
+struct Checkmark<Label: View, T: Equatable>: View {
     
-    @Binding var status: SortType
-    var element: SortType
+    @Binding var status: T
+    var element: T
     var action: () -> Void
     @ViewBuilder var label: () -> Label
     
-    init(_ status: Binding<SortType>, equaleTo element: SortType, action: @escaping () -> Void, label: @escaping () -> Label) {
+    init(_ status: Binding<T>, equaleTo element: T, action: @escaping () -> Void, label: @escaping () -> Label) {
         self._status = status
         self.element = element
         self.action = action
