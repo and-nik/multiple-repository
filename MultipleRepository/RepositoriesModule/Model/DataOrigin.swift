@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DataOrigin: String {
+enum DataOrigin: String, Hashable {
     case github = "a"
     case bitbucket = "b"
 }

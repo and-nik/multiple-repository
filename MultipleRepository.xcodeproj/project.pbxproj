@@ -11,10 +11,8 @@
 		BF095CF829F28E1D0087C3E0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095CF729F28E1D0087C3E0 /* DetailView.swift */; };
 		BF095CFA29F28E3D0087C3E0 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095CF929F28E3D0087C3E0 /* DetailViewModel.swift */; };
 		BF095CFC29F29F120087C3E0 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095CFB29F29F120087C3E0 /* WebView.swift */; };
-		BF095D0329F2E99D0087C3E0 /* EndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D0229F2E99D0087C3E0 /* EndpointProtocol.swift */; };
 		BF095D0529F2E9FF0087C3E0 /* RepositoriesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D0429F2E9FF0087C3E0 /* RepositoriesNetworkManager.swift */; };
 		BF095D0729F2EA310087C3E0 /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D0629F2EA310087C3E0 /* RequestMethod.swift */; };
-		BF095D0929F336890087C3E0 /* RepoEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D0829F336890087C3E0 /* RepoEndpoint.swift */; };
 		BF095D0E29F420EB0087C3E0 /* Checkmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D0D29F420EB0087C3E0 /* Checkmark.swift */; };
 		BF095D1129F42A040087C3E0 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D1029F42A040087C3E0 /* FilterView.swift */; };
 		BF095D1329F42A130087C3E0 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D1229F42A130087C3E0 /* FilterViewModel.swift */; };
@@ -30,6 +28,8 @@
 		BFAC2D8929F16AB1006D4905 /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2D8829F16AB1006D4905 /* RepositoryCell.swift */; };
 		BFAC2D8B29F19F3D006D4905 /* Bitbucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2D8A29F19F3D006D4905 /* Bitbucket.swift */; };
 		BFAC2D8D29F19F6F006D4905 /* GithubData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2D8C29F19F6F006D4905 /* GithubData.swift */; };
+		BFC4512429FA9FA000A5A6A4 /* NetworkErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC4512329FA9FA000A5A6A4 /* NetworkErrors.swift */; };
+		BFC4512629FAD2AB00A5A6A4 /* RepositoriesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC4512529FAD2AB00A5A6A4 /* RepositoriesStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,10 +37,8 @@
 		BF095CF729F28E1D0087C3E0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		BF095CF929F28E3D0087C3E0 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		BF095CFB29F29F120087C3E0 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		BF095D0229F2E99D0087C3E0 /* EndpointProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointProtocol.swift; sourceTree = "<group>"; };
 		BF095D0429F2E9FF0087C3E0 /* RepositoriesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesNetworkManager.swift; sourceTree = "<group>"; };
 		BF095D0629F2EA310087C3E0 /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
-		BF095D0829F336890087C3E0 /* RepoEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoEndpoint.swift; sourceTree = "<group>"; };
 		BF095D0D29F420EB0087C3E0 /* Checkmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkmark.swift; sourceTree = "<group>"; };
 		BF095D1029F42A040087C3E0 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		BF095D1229F42A130087C3E0 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
@@ -57,6 +55,8 @@
 		BFAC2D8829F16AB1006D4905 /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
 		BFAC2D8A29F19F3D006D4905 /* Bitbucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bitbucket.swift; sourceTree = "<group>"; };
 		BFAC2D8C29F19F6F006D4905 /* GithubData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubData.swift; sourceTree = "<group>"; };
+		BFC4512329FA9FA000A5A6A4 /* NetworkErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrors.swift; sourceTree = "<group>"; };
+		BFC4512529FAD2AB00A5A6A4 /* RepositoriesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				BFAC2D8429F1621B006D4905 /* NetworkManagerProtocol.swift */,
-				BF095D0229F2E99D0087C3E0 /* EndpointProtocol.swift */,
+				BFC4512329FA9FA000A5A6A4 /* NetworkErrors.swift */,
 				BF095D0629F2EA310087C3E0 /* RequestMethod.swift */,
 			);
 			path = Model;
@@ -110,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				BF095D0429F2E9FF0087C3E0 /* RepositoriesNetworkManager.swift */,
-				BF095D0829F336890087C3E0 /* RepoEndpoint.swift */,
 			);
 			path = RepositoriesNetworkManager;
 			sourceTree = "<group>";
@@ -196,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				BFAC2D8129F15FC7006D4905 /* Repository.swift */,
+				BFC4512529FAD2AB00A5A6A4 /* RepositoriesStore.swift */,
 				BFAC2D8A29F19F3D006D4905 /* Bitbucket.swift */,
 				BFAC2D8C29F19F6F006D4905 /* GithubData.swift */,
 				BF095D1429F454F80087C3E0 /* SortType.swift */,
@@ -284,6 +284,7 @@
 			files = (
 				BFAC2D8D29F19F6F006D4905 /* GithubData.swift in Sources */,
 				BF095D0529F2E9FF0087C3E0 /* RepositoriesNetworkManager.swift in Sources */,
+				BFC4512629FAD2AB00A5A6A4 /* RepositoriesStore.swift in Sources */,
 				BFAC2D7D29F15F60006D4905 /* RepositoriesView.swift in Sources */,
 				BF095CF329F28C650087C3E0 /* Sequence.swift in Sources */,
 				BF095D1729F4551B0087C3E0 /* DataOrigin.swift in Sources */,
@@ -291,9 +292,7 @@
 				BF095D1329F42A130087C3E0 /* FilterViewModel.swift in Sources */,
 				BFAC2D8229F15FC7006D4905 /* Repository.swift in Sources */,
 				BF095D1129F42A040087C3E0 /* FilterView.swift in Sources */,
-				BF095D0329F2E99D0087C3E0 /* EndpointProtocol.swift in Sources */,
 				BF095D1529F454F80087C3E0 /* SortType.swift in Sources */,
-				BF095D0929F336890087C3E0 /* RepoEndpoint.swift in Sources */,
 				BF095D0729F2EA310087C3E0 /* RequestMethod.swift in Sources */,
 				BFAC2D8529F1621B006D4905 /* NetworkManagerProtocol.swift in Sources */,
 				BFAC2D8929F16AB1006D4905 /* RepositoryCell.swift in Sources */,
@@ -301,6 +300,7 @@
 				BFAC2D8B29F19F3D006D4905 /* Bitbucket.swift in Sources */,
 				BFAC2D7F29F15F87006D4905 /* RepositoriesViewModel.swift in Sources */,
 				BF095CFC29F29F120087C3E0 /* WebView.swift in Sources */,
+				BFC4512429FA9FA000A5A6A4 /* NetworkErrors.swift in Sources */,
 				BF095CFA29F28E3D0087C3E0 /* DetailViewModel.swift in Sources */,
 				BFAC2D6D29F15EAE006D4905 /* MultipleRepositoryApp.swift in Sources */,
 			);

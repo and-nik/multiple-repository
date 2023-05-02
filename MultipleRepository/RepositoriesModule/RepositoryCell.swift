@@ -23,7 +23,7 @@ struct RepositoryCell: View, Identifiable {
                     .foregroundColor(Color(uiColor: .label))
                 Text(repo.ownerNikname ?? "Unknowed nikname")
                 Spacer()
-                Image( repo.dataOrigin == .bitbucket ? "bitbucket" : "github")
+                Image(repo.dataOrigin == .bitbucket ? "bitbucket" : "github")
                     .resizable()
                     .scaledToFill()
                     .frame(width: 15, height: 15)

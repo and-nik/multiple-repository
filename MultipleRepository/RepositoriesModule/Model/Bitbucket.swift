@@ -16,12 +16,21 @@ struct Bitbucket: Decodable {
     
     struct BitbucketData: Decodable {
         let title: String
+        let links: Links
         let owner: Owner
         let description: String?
         
         private enum CodingKeys: String, CodingKey {
             case title = "name"
-            case owner, description
+            case links, owner, description
+        }
+        
+        struct Links: Decodable {
+            let html: Html
+            
+            struct Html: Decodable {
+                let href: URL
+            }
         }
         
         struct Owner: Decodable {

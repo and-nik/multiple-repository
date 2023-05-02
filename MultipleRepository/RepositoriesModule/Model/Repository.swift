@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Repository {
+struct Repository: Hashable {
     let title: String
     let userIcon: Data
     let description: String
@@ -16,4 +16,14 @@ struct Repository {
     let ownerNikname: String?
     let ownerURL: URL?
     let repoURL: URL?
+    
+    init(title: String, userIcon: Data, description: String, dataOrigin: DataOrigin, ownerNikname: String?, ownerURL: URL?, repoURL: URL?) {
+        self.title = title
+        self.userIcon = userIcon
+        self.description = description
+        self.dataOrigin = dataOrigin
+        self.ownerNikname = ownerNikname
+        self.ownerURL = ownerURL
+        self.repoURL = repoURL
+    }
 }

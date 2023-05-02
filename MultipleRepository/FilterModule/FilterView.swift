@@ -7,17 +7,43 @@
 
 import SwiftUI
 
-struct FilterView<viewModelProtocol: FilterViewModelProtocol>: View {
+struct FilterView<ViewModelProtocol: FilterViewModelProtocol>: View {
     
-    @Environment(\.dismiss) var dissmis
-    @StateObject private var viewModel: viewModelProtocol
+    @Environment(\.dismiss) var dismiss
+    @StateObject private var viewModel: ViewModelProtocol
     
-    public init(viewModel: viewModelProtocol) {
+    public init(viewModel: ViewModelProtocol) {
         self._viewModel = StateObject(wrappedValue: viewModel)
+        //self.viewModel = viewModel
     }
     
     var body: some View {
         List {
+            
+            Text("Available \(viewModel.count) items")
+                .frame(maxWidth: .infinity)
+                .onChange(of: viewModel.repositoriesStore.sortedRepositories.count) { newValue in
+                    
+                }
+            
+            Section {
+                TextField("Enter title", text: $viewModel.filteredStrings.title)
+                    .onChange(of: viewModel.filteredStrings.title) { newValue in
+                        viewModel.filter()
+                    }
+            } header: {
+                Text("Repository title")
+            }
+            
+            Section {
+                TextField("Enter nikname", text: $viewModel.filteredStrings.nikname)
+                    .onChange(of: viewModel.filteredStrings.nikname) { newValue in
+                        viewModel.filter()
+                    }
+            } header: {
+                Text("Nikname")
+            }
+            
             Section {
                 Checkmark($viewModel.sortType, equaleTo: .gitToBit) {
                     viewModel.filter()
@@ -57,38 +83,35 @@ struct FilterView<viewModelProtocol: FilterViewModelProtocol>: View {
                 .frame(maxWidth: .infinity)
             }
             
-            Section {
-                TextField("Enter title", text: $viewModel.filteredStrings.title)
-                    .onChange(of: viewModel.filteredStrings.title) { newValue in
-                        viewModel.filter()
-                    }
-            } header: {
-                Text("Repository title")
-            }
-            
-            Section {
-                TextField("Enter nikname", text: $viewModel.filteredStrings.nikname)
-                    .onChange(of: viewModel.filteredStrings.nikname) { newValue in
-                        viewModel.filter()
-                    }
-            } header: {
-                Text("Nikname")
-            }
-            
-            Button {
-                
-                viewModel.completion(viewModel.repositories, viewModel.filteredStrings, viewModel.sortType)
-                if viewModel.filteredStrings.title != "" || viewModel.filteredStrings.nikname != "" || viewModel.sortType != .none {
+        }
+        .navigationTitle("Filter")
+        .navigationBarTitleDisplayMode(.inline)
+        .onDisappear {
+            if viewModel.filteredStrings.title != "" || viewModel.filteredStrings.nikname != "" || viewModel.sortType != .none {
+                withAnimation {
                     viewModel.isFiltered = true
                 }
-                dissmis()
-            } label: {
-                Text("Show \(viewModel.repositories.count)")
-                    .frame(maxWidth: .infinity)
+            } else {
+                viewModel.repositoriesStore.sortedRepositories = viewModel.repositoriesStore.repositories
+                withAnimation {
+                    viewModel.isFiltered = false
+                }
             }
+            viewModel.completion([], viewModel.filteredStrings, viewModel.sortType)
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 //var body: some View {
