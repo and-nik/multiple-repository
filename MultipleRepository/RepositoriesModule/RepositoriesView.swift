@@ -26,70 +26,67 @@ struct RepositoriesView<ViewModelProtocol: RepositoriesViewModelProtocol>: View 
                     .scaleEffect(2)
                     .navigationTitle("Multiple repository")
             } else {
-                
-                if viewModel.isReloadButtonShowing {
-                    Button {
-                        viewModel.refresh()
-                        isFiltered = false
-                    } label: {
-                        Image(systemName: "arrow.counterclockwise")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 25, height: 25)
+                List {
+                    Section {
+                        NavigationLink {
+                            FilterView(viewModel:
+                                        FilterViewModel(
+                                            sortType: viewModel.sortType,
+                                            filteredStrings: viewModel.filteredStrings,
+                                            isFiltered: $isFiltered,
+                                            repositoriesStore: viewModel.repositoriesStore)
+                                       { _, filteredStrings, sortType in
+                                viewModel.filteredStrings = filteredStrings
+                                viewModel.sortType = sortType
+                                isReload.toggle()
+                            })
+                        } label: {
+                            Text("Filter")
+                        }
                     }
-                    .navigationTitle("Multiple repository")
-                } else {
-                    List {
+                    
+                    if isFiltered {
                         Section {
-                            NavigationLink {
-                                FilterView(viewModel:
-                                            FilterViewModel(
-                                                sortType: viewModel.sortType,
-                                                filteredStrings: viewModel.filteredStrings,
-                                                isFiltered: $isFiltered,
-                                                repositoriesStore: viewModel.repositoriesStore)
-                                           { _, filteredStrings, sortType in
-                                    viewModel.filteredStrings = filteredStrings
-                                    viewModel.sortType = sortType
-                                    isReload.toggle()
-                                })
+                            Button {
+                                viewModel.repositoriesStore.sortedRepositories = viewModel.repositoriesStore.repositories
+                                viewModel.sortType = .none
+                                viewModel.filteredStrings.title = ""
+                                viewModel.filteredStrings.nikname = ""
+                                withAnimation {
+                                    isFiltered = false
+                                }
                             } label: {
-                                Text("Filter")
-                            }
-                        }
-                        
-                        if isFiltered {
-                            Section {
-                                Button {
-                                    viewModel.repositoriesStore.sortedRepositories = viewModel.repositoriesStore.repositories
-                                    viewModel.sortType = .none
-                                    viewModel.filteredStrings.title = ""
-                                    viewModel.filteredStrings.nikname = ""
-                                    withAnimation {
-                                        isFiltered = false
-                                    }
-                                } label: {
-                                    Text("Remove filter")
-                                        .foregroundColor(.red)
-                                }
-                            }
-                        }
-                        
-                        Section {
-                            ForEach(viewModel.repositoriesStore.sortedRepositories, id: \.self) { repo in
-                                NavigationLink {
-                                    DetailView(viewModel: DetailViewModel(repo: repo))
-                                } label: {
-                                    RepositoryCell(repo: repo)
-                                }
+                                Text("Remove filter")
+                                    .foregroundColor(.red)
                             }
                         }
                     }
-                    .refreshable {
-                        viewModel.refresh()
-                        isFiltered = false
+                    
+                    Section {
+                        ForEach(viewModel.repositoriesStore.sortedRepositories, id: \.self) { repo in
+                            NavigationLink {
+                                DetailView(viewModel: DetailViewModel(repo: repo))
+                            } label: {
+                                RepositoryCell(repo: repo)
+                            }
+                        }
                     }
-                    .navigationTitle("Multiple repository")
+                }
+                .refreshable {
+                    viewModel.refresh()
+                    isFiltered = false
+                }
+                .navigationTitle("Multiple repository")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            viewModel.refresh()
+                            isFiltered = false
+                        } label: {
+                            Image(systemName: "arrow.counterclockwise")
+                        }
+                        .opacity(viewModel.isReloadButtonShowing ? 1 : 0)
+                    }
                 }
             }
         }
@@ -113,6 +110,9 @@ struct RepositoriesView<ViewModelProtocol: RepositoriesViewModelProtocol>: View 
 
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoriesView(viewModel: RepositoriesViewModel(networkManager: RepositoriesNetworkManager(session: URLSession(configuration: .default))))
+        RepositoriesView(
+            viewModel: RepositoriesViewModel(
+                networkManager: RepositoriesNetworkManager(session: URLSession(configuration: .default)),
+                coreDataManager: RepositoriesCoreDataManager(persistentContainerName: "Model")))
     }
 }
