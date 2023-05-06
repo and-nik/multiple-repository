@@ -2,7 +2,7 @@
 //  RepositoryModel+CoreDataProperties.swift
 //  MultipleRepository
 //
-//  Created by And Nik on 05.05.23.
+//  Created by And Nik on 06.05.23.
 //
 //
 
@@ -16,13 +16,13 @@ extension RepositoryModel {
         return NSFetchRequest<RepositoryModel>(entityName: "RepositoryModel")
     }
 
-    @NSManaged public var userIcon: Data?
-    @NSManaged public var title: String?
-    @NSManaged public var repoDescription: String?
     @NSManaged public var dataOrigin: String?
     @NSManaged public var ownerNikname: String?
     @NSManaged public var ownerURL: String?
+    @NSManaged public var repoDescription: String?
     @NSManaged public var repoURL: String?
+    @NSManaged public var title: String?
+    @NSManaged public var userIcon: Data?
 
 }
 

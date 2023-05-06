@@ -19,10 +19,10 @@
 		BF095D1529F454F80087C3E0 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D1429F454F80087C3E0 /* SortType.swift */; };
 		BF095D1729F4551B0087C3E0 /* DataOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF095D1629F4551B0087C3E0 /* DataOrigin.swift */; };
 		BF8D0EEC2A050EA500692B5C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF8D0EEA2A050EA500692B5C /* Model.xcdatamodeld */; };
-		BF8D0EF32A05124800692B5C /* RepositoryModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D0EF12A05124800692B5C /* RepositoryModel+CoreDataClass.swift */; };
-		BF8D0EF42A05124800692B5C /* RepositoryModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D0EF22A05124800692B5C /* RepositoryModel+CoreDataProperties.swift */; };
 		BF8D0EF92A0552B600692B5C /* CoreDataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D0EF82A0552B600692B5C /* CoreDataManagerProtocol.swift */; };
 		BF8D0EFB2A0669DB00692B5C /* RepositoriesCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D0EFA2A0669DB00692B5C /* RepositoriesCoreDataManager.swift */; };
+		BF8D0F082A06985D00692B5C /* RepositoryModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D0F062A06985D00692B5C /* RepositoryModel+CoreDataClass.swift */; };
+		BF8D0F092A06985D00692B5C /* RepositoryModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D0F072A06985D00692B5C /* RepositoryModel+CoreDataProperties.swift */; };
 		BFAC2D6D29F15EAE006D4905 /* MultipleRepositoryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC2D6C29F15EAE006D4905 /* MultipleRepositoryApp.swift */; };
 		BFAC2D7129F15EB0006D4905 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2D7029F15EB0006D4905 /* Assets.xcassets */; };
 		BFAC2D7429F15EB0006D4905 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFAC2D7329F15EB0006D4905 /* Preview Assets.xcassets */; };
@@ -50,10 +50,10 @@
 		BF095D1429F454F80087C3E0 /* SortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortType.swift; sourceTree = "<group>"; };
 		BF095D1629F4551B0087C3E0 /* DataOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOrigin.swift; sourceTree = "<group>"; };
 		BF8D0EEB2A050EA500692B5C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		BF8D0EF12A05124800692B5C /* RepositoryModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepositoryModel+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		BF8D0EF22A05124800692B5C /* RepositoryModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepositoryModel+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		BF8D0EF82A0552B600692B5C /* CoreDataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerProtocol.swift; sourceTree = "<group>"; };
 		BF8D0EFA2A0669DB00692B5C /* RepositoriesCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesCoreDataManager.swift; sourceTree = "<group>"; };
+		BF8D0F062A06985D00692B5C /* RepositoryModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepositoryModel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BF8D0F072A06985D00692B5C /* RepositoryModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepositoryModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BFAC2D6929F15EAE006D4905 /* MultipleRepository.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultipleRepository.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFAC2D6C29F15EAE006D4905 /* MultipleRepositoryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRepositoryApp.swift; sourceTree = "<group>"; };
 		BFAC2D7029F15EB0006D4905 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -129,8 +129,8 @@
 		BF8D0EE92A050E7100692B5C /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				BF8D0EF12A05124800692B5C /* RepositoryModel+CoreDataClass.swift */,
-				BF8D0EF22A05124800692B5C /* RepositoryModel+CoreDataProperties.swift */,
+				BF8D0F072A06985D00692B5C /* RepositoryModel+CoreDataProperties.swift */,
+				BF8D0F062A06985D00692B5C /* RepositoryModel+CoreDataClass.swift */,
 				BF8D0EEA2A050EA500692B5C /* Model.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -301,6 +301,8 @@
 				BF095D0529F2E9FF0087C3E0 /* RepositoriesNetworkManager.swift in Sources */,
 				BF8D0EF92A0552B600692B5C /* CoreDataManagerProtocol.swift in Sources */,
 				BFC4512629FAD2AB00A5A6A4 /* RepositoriesStore.swift in Sources */,
+				BF8D0F082A06985D00692B5C /* RepositoryModel+CoreDataClass.swift in Sources */,
+				BF8D0F092A06985D00692B5C /* RepositoryModel+CoreDataProperties.swift in Sources */,
 				BFAC2D7D29F15F60006D4905 /* RepositoriesView.swift in Sources */,
 				BF095CF329F28C650087C3E0 /* Sequence.swift in Sources */,
 				BF095D1729F4551B0087C3E0 /* DataOrigin.swift in Sources */,
@@ -314,12 +316,10 @@
 				BF095D0729F2EA310087C3E0 /* RequestMethod.swift in Sources */,
 				BFAC2D8529F1621B006D4905 /* NetworkManagerProtocol.swift in Sources */,
 				BFAC2D8929F16AB1006D4905 /* RepositoryCell.swift in Sources */,
-				BF8D0EF42A05124800692B5C /* RepositoryModel+CoreDataProperties.swift in Sources */,
 				BF095D0E29F420EB0087C3E0 /* Checkmark.swift in Sources */,
 				BFAC2D8B29F19F3D006D4905 /* Bitbucket.swift in Sources */,
 				BFAC2D7F29F15F87006D4905 /* RepositoriesViewModel.swift in Sources */,
 				BF095CFC29F29F120087C3E0 /* WebView.swift in Sources */,
-				BF8D0EF32A05124800692B5C /* RepositoryModel+CoreDataClass.swift in Sources */,
 				BFC4512429FA9FA000A5A6A4 /* NetworkErrors.swift in Sources */,
 				BF095CFA29F28E3D0087C3E0 /* DetailViewModel.swift in Sources */,
 				BFAC2D6D29F15EAE006D4905 /* MultipleRepositoryApp.swift in Sources */,
