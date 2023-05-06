@@ -9,7 +9,11 @@ import SwiftUI
 
 protocol RepositoriesViewModelProtocol: ObservableObject {
     
-    var networkManager: RepositoriesNetworkManager { get }
+    associatedtype NetworkViewModel
+    associatedtype CoreDataViewModel
+    
+    var networkManager: NetworkViewModel { get }
+    var coreDataManager: CoreDataViewModel { get }
     func getRepo() async
     
     //error handle variable
@@ -27,9 +31,12 @@ protocol RepositoriesViewModelProtocol: ObservableObject {
     func refresh()
 }
 
-final class RepositoriesViewModel: RepositoriesViewModelProtocol, ObservableObject {
+final class RepositoriesViewModel<NetworkViewModel, CoreDataViewModel>: RepositoriesViewModelProtocol
+where NetworkViewModel: RepositoriesNetworkManagerProtocol,
+      CoreDataViewModel: RepositoriesCoreDataManagerProtocol {
     
-    let networkManager: RepositoriesNetworkManager
+    let networkManager: NetworkViewModel
+    let coreDataManager: CoreDataViewModel
     
     @Published var isLoading: Bool = true
     @Published var isReloadButtonShowing: Bool = false
@@ -41,11 +48,14 @@ final class RepositoriesViewModel: RepositoriesViewModelProtocol, ObservableObje
     
     var repositoriesStore: RepositoriesStore = RepositoriesStore()
     
-    init(networkManager: RepositoriesNetworkManager) {
+    init(networkManager: NetworkViewModel,
+         coreDataManager: CoreDataViewModel) {
         self.networkManager = networkManager
+        self.coreDataManager = coreDataManager
     }
     
     public func getRepo() async {
+        isLoading = true
         Task { @MainActor in
             do {
                 let bitbucketRepositories = try await networkManager.getRepo(from: .bitbucket)
@@ -53,6 +63,7 @@ final class RepositoriesViewModel: RepositoriesViewModelProtocol, ObservableObje
                 repositoriesStore.repositories = bitbucketRepositories + githubRepositories
                 repositoriesStore.repositories.shuffle()
                 repositoriesStore.sortedRepositories = repositoriesStore.repositories
+                coreDataManager.saveToCoreData(repos: repositoriesStore.repositories)
                 isLoading = false
                 isReloadButtonShowing = false
             } catch {
@@ -61,6 +72,8 @@ final class RepositoriesViewModel: RepositoriesViewModelProtocol, ObservableObje
                 isReloadButtonShowing = true
                 loadingError = "Some problem: " + "\(error)"
                 isAlertShowing.toggle()
+                repositoriesStore.repositories = coreDataManager.loadFromCoreData()
+                repositoriesStore.sortedRepositories = repositoriesStore.repositories
             }
         }
     }
@@ -71,4 +84,5 @@ final class RepositoriesViewModel: RepositoriesViewModelProtocol, ObservableObje
         filteredStrings.title = ""
         filteredStrings.nikname = ""
     }
+    
 }

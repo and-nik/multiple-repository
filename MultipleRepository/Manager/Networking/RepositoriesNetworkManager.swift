@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class RepositoriesNetworkManager: NetworkManagerProtocol {
+protocol RepositoriesNetworkManagerProtocol: NetworkManagerProtocol {
+    func getRepo(from origin: DataOrigin) async throws -> [Repository]
+}
+
+final class RepositoriesNetworkManager: RepositoriesNetworkManagerProtocol {
     
     var session: URLSession
     
